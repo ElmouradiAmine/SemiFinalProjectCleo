@@ -1,8 +1,7 @@
 import pygame
 
-from menuScreen import * 
 from settings import *
-from playnowScreen import *
+from screens import *
 
 
 pygame.init()

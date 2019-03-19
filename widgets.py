@@ -2,24 +2,46 @@ import pygame
 from settings import *
 from colors import *
 
+
+
+
+"""
+**************************************************
+*              BUTTON CLASS                      *
+**************************************************
+"""
 class Button:
-    def __init__(self,text):
+    def __init__(self,text,path1,path2,mode=False):
         self.x = 0
         self.y = 0
-        self.width = 150
-        self.height = 50
-        self.surface = pygame.Surface((self.width,self.height))
-        self.surface.fill(RED)
+
+        
+        self.background = pygame.image.load(path1)
+       
+        self.backgroundEffect = pygame.image.load(path2)
+        if mode == False:
+            self.backgroundEffect = pygame.transform.scale(self.backgroundEffect, (150,75) )
+            self.background = pygame.transform.scale(self.background , (150,75))
+        else:
+            self.backgroundEffect = pygame.transform.scale(self.backgroundEffect, (50,50) )
+            self.background = pygame.transform.scale(self.background , (50,50))
+        self.rect = self.background.get_rect()
+        self.width = self.rect.width
+        self.height = self.rect.height
         self.text = Text(text)
         self.isSelected = False
 
     def draw(self,screen):
-        if (self.isSelected):
+        """if (self.isSelected):
             pygame.draw.rect(screen, RED, [self.x,self.y, self.width, self.height])
         else:
             pygame.draw.rect(screen, BLUE, [self.x,self.y, self.width, self.height])
 
-        self.text.draw(screen,self.x+self.width/2,self.y+self.height/2)
+        self.text.draw(screen,self.x+self.width/2,self.y+self.height/2)"""
+        if ( not self.isSelected):
+            screen.blit(self.background, (self.x,self.y))
+        else:
+            screen.blit(self.backgroundEffect, (self.x,self.y))
 
     def events(self,event,mouse_x,mouse_y):
         if (pygame.mouse.get_rel()!=(0,0)): 
@@ -55,7 +77,11 @@ class Button:
             self.y = y
         
 
-
+"""
+**************************************************
+*              EDIT TEXT CLASS                   *
+**************************************************
+"""
 class EditText:
     def __init__(self,hide=0):
         self.hide = hide
@@ -84,6 +110,7 @@ class EditText:
         return False
 
     def draw(self,screen):
+
         if (self.hide == 0):
             self.textDisplayed = self.textString
         else:
@@ -95,7 +122,7 @@ class EditText:
         self.text.draw(screen,self.x+10,self.y+self.height/2+self.padding,1)
         if self.isSelected:
             pygame.draw.rect(screen, RED, [self.text.textrect.right , self.text.textrect.centery-(self.height-10)/2-self.padding, 2 , self.height-10 ])
-            
+          
     def events(self,event):
         capslock = pygame.key.get_mods() & pygame.KMOD_CAPS
         keys = pygame.key.get_pressed()
@@ -163,6 +190,14 @@ class EditText:
                     self.textString = self.textString[:-1]
                 print(self.textString)
 
+
+
+
+"""
+**************************************************
+*              TEXT CLASS                        *
+**************************************************
+"""
 class Text:
     def __init__(self,text,size=30):
         self.font = pygame.font.SysFont(None, size)
