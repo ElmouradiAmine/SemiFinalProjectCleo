@@ -6,6 +6,7 @@ from crypting import cryptage
 
 
 
+
 """
 **************************************************
 *              MENU SCREEN CLASS                 *
@@ -142,7 +143,9 @@ class MenuScreen:
 
     def release(self):
         pygame.quit()
+        sys.exit()
         quit()
+        
 
 
 
