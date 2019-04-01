@@ -2,18 +2,20 @@ import pygame
 
 from settings import *
 from screens import *
+from sys import *
 
-
-pygame.init()
-screen = pygame.display.set_mode((WIDTH,HEIGHT))
-pygame.display.set_caption(TITLE)
-
-menuScreen = MenuScreen(screen)
-menuScreen.run()
-
+if __name__ == '__main__':
+    pygame.init()
     
-pygame.quit()
-quit()
+    screen = pygame.display.set_mode((WIDTH,HEIGHT))
+    pygame.display.set_caption(TITLE)
+    pygame.mixer.music.load('./Music/egyptMusic.mp3')
+    pygame.mixer.music.play()
+
+    menuScreen = MenuScreen(screen)
+    menuScreen.run()
+    pygame.quit()
+    quit()
 
 
 

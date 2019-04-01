@@ -11,7 +11,7 @@ from colors import *
 **************************************************
 """
 class Button:
-    def __init__(self,text,path1,path2,mode=False):
+    def __init__(self,text,path1,path2,mode=0):
         self.x = 0
         self.y = 0
 
@@ -19,12 +19,13 @@ class Button:
         self.background = pygame.image.load(path1)
        
         self.backgroundEffect = pygame.image.load(path2)
-        if mode == False:
+        if mode == 0:
             self.backgroundEffect = pygame.transform.scale(self.backgroundEffect, (150,75) )
             self.background = pygame.transform.scale(self.background , (150,75))
-        else:
+        elif mode == 1:
             self.backgroundEffect = pygame.transform.scale(self.backgroundEffect, (50,50) )
             self.background = pygame.transform.scale(self.background , (50,50))
+            
         self.rect = self.background.get_rect()
         self.width = self.rect.width
         self.height = self.rect.height
@@ -87,12 +88,14 @@ class EditText:
         self.hide = hide
         self.x = 0
         self.y = 0
-        self.width = 200
+        self.width = 250
         self.height = 50
+        self.background = pygame.image.load('assets/editText.png')
+        self.background = pygame.transform.scale(self.background , (250,50))
         self.textString = ""
         self.textDisplayed = ""
         self.isSelected = False
-        self.maxChar = 10
+        self.maxChar = 15
         self.padding = 0
 
     def addPadding(self,padding):
@@ -117,11 +120,11 @@ class EditText:
             self.textDisplayed = ""
             for i in range(len(self.textString)):
                 self.textDisplayed += "*"
-        self.text = Text(self.textDisplayed,46 if self.hide == 1 else 36)
-        pygame.draw.rect(screen, GREEN, [self.x, self.y , self.width , self.height ] ,2)
-        self.text.draw(screen,self.x+10,self.y+self.height/2+self.padding,1)
+        self.text = Text(self.textDisplayed,46 if self.hide == 1 else 28)
+        screen.blit(self.background, (self.x, self.y))
+        self.text.draw(screen,self.x+20,self.y+self.height/2+self.padding,1)
         if self.isSelected:
-            pygame.draw.rect(screen, RED, [self.text.textrect.right , self.text.textrect.centery-(self.height-10)/2-self.padding, 2 , self.height-10 ])
+            pygame.draw.rect(screen, RED, [self.text.textrect.right , self.text.textrect.centery-(self.height-10)/2-2-(5 if self.hide == 1 else 0 ), 2 , self.height-10 ])
           
     def events(self,event):
         capslock = pygame.key.get_mods() & pygame.KMOD_CAPS
