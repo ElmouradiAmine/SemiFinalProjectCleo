@@ -202,9 +202,9 @@ class EditText:
 **************************************************
 """
 class Text:
-    def __init__(self,text,size=30):
+    def __init__(self,text,size=30, color = GREEN):
         self.font = pygame.font.SysFont(None, size)
-        self.text = self.font.render(text, True, GREEN)
+        self.text = self.font.render(text, True, color)
         self.textrect = self.text.get_rect()
         
 
